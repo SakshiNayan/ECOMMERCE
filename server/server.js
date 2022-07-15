@@ -1,6 +1,9 @@
 const express= require("express");
 const mongoose= require("mongoose");
-const userController= require("./user/routes/user")
+const userController= require("./user/routes/user");
+const orderController =require("./user/routes/orders");
+const cartController = require("./user/routes/cart");
+const itemController = require("./user/routes/items")
 const multer =require("multer")();
 const app= express();
 
@@ -19,6 +22,8 @@ app.use(express.urlencoded({extented: false}));
 app.use(multer.array());
 
 //Database connection
+//for clusture
+//mongoose.connect("mongodb+srv://Sakshi123:<password>@project-1.iqvoerr.mongodb.net/?retryWrites=true&w=majority")
 mongoose.connect("mongodb://localhost/ecommerce",(data)=>{
     console.log("Successfully connect to db")
 },(err)=>{
@@ -30,4 +35,7 @@ app.get("/",(req,res)=>{
 })
 
 //middleware
-app.use("/user",userController);
+app.use("/user", userController);
+app.use("/order", orderController);
+app.use("/cart", cartController);
+app.use("/item", itemController);

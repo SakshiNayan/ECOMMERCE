@@ -1,5 +1,5 @@
 const signupModal= require("./modals/signup-modal");
-
+const bcrypt = require("bcryptjs");
 //asynchronous operation
 const checkExistingUser = async (username)=>{      //.its a reusable function
     let existingUser = false;
@@ -10,5 +10,17 @@ const checkExistingUser = async (username)=>{      //.its a reusable function
     });
     return existingUser;
 }
+const generatePasswordHash = (password)=>{
+    const salt=10;
+    let hash="";
+    return new Promise((resolve, reject) =>{
+         bcrypt.genSalt(salt).then((hashSalt)=>{
+            bcrypt.hash(password, hashSalt).then((passwordHash)=>{
+                resolve(passwordHash);
+            })
+        })
+    });
+    
+}
 
-module.exports = checkExistingUser;
+module.exports = {checkExistingUser, generatePasswordHash};

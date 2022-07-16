@@ -5,11 +5,16 @@ const signupSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    phone_no :{
-        type :Number,
+    // phone_no :{
+    //     type :Number,
+    //     required: true,
+    //     minlength: 10,
+    //     maxlength: 10
+    // },
+    email :{
+        type :String,
         required: true,
-        minlength: 10,
-        maxlength: 10
+        
     },
     password:{
         type: String,

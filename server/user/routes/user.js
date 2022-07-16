@@ -5,10 +5,10 @@ const {checkExistingUser, generatePasswordHash} = require("../utility");
 const bcrypt =require("bcryptjs");
 const jwt = require("jsonwebtoken")
 //for generating secret key we need crypto which internal package
-const crypto= require("crypto");
+// const crypto= require("crypto");
 
-const secretKey = crypto.randomBytes(64).toString("hex");
-const salt =10;
+// const SECRET_KEY = crypto.randomBytes(64).toString("hex");
+// const salt =10;
 
 router.post("/login",(req,res)=>{
     //comparing password
@@ -16,7 +16,7 @@ router.post("/login",(req,res)=>{
         if(userData.length){
             bcrypt.compare(req.body.password, userData[0].password).then((val)=> {
                 if(val){
-                    const authToken= jwt.sign(userData[0].username, secretKey);
+                    const authToken= jwt.sign(userData[0].username, process.env.SECRET_KEY);
                     res.status(200).send({authToken});
                 }
                 else{
@@ -38,7 +38,8 @@ router.post("/signup", async (req,res)=>{
         generatePasswordHash(req.body.password).then((passwordHash)=>{
             signupModal.create({
                 username: req.body.username, 
-                phone_no: req.body.phone_no, 
+                // phone_no: req.body.phone_no, 
+                email: req.body.email,
                 password: passwordHash})
                 .then(()=>{
                      res.status(200).send(`${req.body.username} added successfully`)
@@ -105,3 +106,7 @@ router.put("/updatepassword",(req,res)=>{
 //old pass  //new pass /username
 
 module.exports= router;
+
+
+//verification done by 
+//token n  secretKey

@@ -1,6 +1,15 @@
 const express= require("express");
-const orderModal= require("../modals/order-modal")
+const jwt= require("jsonwebtoken");
+const orderModal= require("../modals/order-modal");
+const {route}= require("./user");
 const router = express.Router();
+
+
+//just for verifing our token
+router.get("/",(req,res)=>{
+    console.log(req.headers, process.env.SECRET_KEY);
+    jwt.verify(req.headers.authToken, process.env.SECRET_KEY)
+})
 
 router.post("/add",(req,res) =>{
     orderModal.create({

@@ -1,11 +1,15 @@
 const express= require("express");
 const mongoose= require("mongoose");
+
+require('dotenv').config();
+
 const userController= require("./user/routes/user");
 const orderController =require("./user/routes/orders");
 const cartController = require("./user/routes/cart");
 const itemController = require("./user/routes/items")
 const multer =require("multer")();
 const app= express();
+const cors = require("cors");
 
 //server
 app.listen(3001, (err)=>{
@@ -20,6 +24,7 @@ app.listen(3001, (err)=>{
 app.use(express.json());
 app.use(express.urlencoded({extented: false}));
 app.use(multer.array());
+app.use(cors());
 
 //Database connection
 //for clusture
